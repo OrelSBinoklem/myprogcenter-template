@@ -1,0 +1,17 @@
+- insertedScripts["jquery"] = true
+script(src='https://code.jquery.com/jquery-3.2.1.min.js', integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=', crossorigin='anonymous')
+script.
+  window.jQuery || document.write('<script src="vendor/jquery/dist/jquery.min.js"><\/script>')
+if config.jQueryMigrate
+  - insertedScripts["jquery-migrate"] = true
+  script(src='https://code.jquery.com/jquery-migrate-3.0.0.min.js', integrity='sha256-JklDYODbg0X+8sPiKkcFURb5z7RvlNMIaE3RA2z97vw=', crossorigin='anonymous')
+  script.
+    window.jQuery.migrateVersion || document.write('<script src="vendor/jquery-migrate/jquery-migrate.min.js"><\/script>')
+
+if config.framework == "bootstrap"
+  +pasteScripts([[/./gi], ["bootstrap"]])
+
+if config.framework == "foundation"
+  +pasteScripts([[/./gi], ["foundation-sites"]])
+
+script(src='js/main.js')

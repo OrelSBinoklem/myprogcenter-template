@@ -1,0 +1,28 @@
+{
+  "name": "front-template",
+  "description": "super frontend template",
+  "main": "packer/index.js",
+  "authors": [
+    "orel-s-binoklem"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "frontend",
+    "template"
+  ],
+  "homepage": "https://github.com/OrelSBinoklem/front-template",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "reset-css": "latest",
+    "jquery": "latest",
+    "jquery-migrate": "latest",
+    "foundation-sites": "^6.4.3",
+    "bootstrap": "v4.0.0-beta"
+  }
+}

@@ -1,0 +1,20 @@
+$step-arround: 5px
+$step-arround-count: 5
+
+@for $i from 1 through $step-arround-count
+  .mt-#{$i}
+    margin-top: $step-arround * $i
+  .mr-#{$i}
+    margin-right: $step-arround * $i
+  .mb-#{$i}
+    margin-bottom: $step-arround * $i
+  .ml-#{$i}
+    margin-left: $step-arround * $i
+  .pt-#{$i}
+    padding-top: $step-arround * $i
+  .pr-#{$i}
+    padding-right: $step-arround * $i
+  .pb-#{$i}
+    padding-bottom: $step-arround * $i
+  .pl-#{$i}
+    padding-left: $step-arround * $i

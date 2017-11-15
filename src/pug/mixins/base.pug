@@ -1,0 +1,19 @@
+mixin pasteFile(modules)
+  - var patternMatches
+  each data, i in modules
+    if !(i % 2)
+      - patternMatches = false
+      each template, i in data
+        if typeof template == "string"
+          if template == current
+            - patternMatches = true
+        else
+          if template.test(current)
+            - patternMatches = true
+    else
+      if patternMatches
+        each name, i in data
+          if /\.js$/.test(name)
+            script(src=path)
+          else if /\.css$/.test(name)
+            link(rel="stylesheet", href=name)

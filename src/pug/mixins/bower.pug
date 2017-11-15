@@ -1,0 +1,76 @@
+- var insertedStyles = {};
+- var insertedScripts = {};
+
+mixin bowerAddDependencies(name, isScript, insertModulesAndDependencies)
+  if name in bower.concateReverse
+    - name = bower.concateReverse[name]
+  if !((!isScript && name in insertedStyles) || (isScript && name in insertedScripts)) && !(name in insertModulesAndDependencies)
+    - insertModulesAndDependencies[name] = true
+    if name in bower.concatModules
+      each nameSingle, i in bower.concatModules[name]
+        if nameSingle in bower.dependencies
+          each data, nameDependent in bower.dependencies[nameSingle]
+            +bowerAddDependencies(nameDependent, isScript, insertModulesAndDependencies)
+    else
+      if name in bower.dependencies
+        each data, nameDependent in bower.dependencies[name]
+          +bowerAddDependencies(nameDependent, isScript, insertModulesAndDependencies)
+
+mixin bowerPasteModule(modules, isScript)
+  - var availableModules = {}
+  - var insertModules = {}
+  - var insertModulesAndDependencies = {}
+
+  //- create availableModules
+  each name, i in bower.pluginsList
+    - availableModules[name] = true
+
+  //- create insertModules
+  - var patternMatches
+  each data, i in modules
+    if !(i % 2)
+      - patternMatches = false
+      each template, i in data
+        if typeof template == "string"
+          if template == current
+            - patternMatches = true
+        else
+          if template.test(current)
+            - patternMatches = true
+    else
+      if patternMatches
+        each name, i in data
+          //- если модуль обьединён с другими то вызываем обьединённый модуль
+          if name in bower.concateReverse
+            - insertModules[bower.concateReverse[name]] = true
+          else
+            - insertModules[name] = true
+
+  //- Отсекаем модули которые были вставлены ранее и которых нет в "availableModules"
+  each val, name in insertModules
+    if (!isScript && name in insertedStyles) || (isScript && name in insertedScripts) || !(name in availableModules)
+      - delete insertModules[name]
+
+  //- create insertModulesAndDependencies
+  each val, name in insertModules
+    +bowerAddDependencies(name, isScript, insertModulesAndDependencies)
+
+  each name, i in bower.pluginsList
+    if !((!isScript && name in insertedStyles) || (isScript && name in insertedScripts)) && name in insertModulesAndDependencies && name in bower.paths
+      if isScript
+        - insertedScripts[name] = true
+      else
+        - insertedStyles[name] = true
+      each path, i in bower.paths[name]
+        if isScript
+          if /\.js$/.test(path)
+            script(src=path)
+        else
+          if /\.css$/.test(path)
+            link(rel="stylesheet", href=path)
+
+mixin pasteStyles(modules)
+  +bowerPasteModule(modules, false)
+
+mixin pasteScripts(modules)
+  +bowerPasteModule(modules, true)

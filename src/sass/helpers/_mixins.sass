@@ -1,0 +1,35 @@
+=bgj ($NumberBgJ, $x, $y)
+  background: url(../img/#{$NumberBgJ}.jpg) $x $y no-repeat
+
+=bgp ($NumberBgP, $x, $y)
+  background: url(../img/#{$NumberBgP}.png) $x $y no-repeat
+
+=bgs ($NumberBgS, $x, $y)
+  background: url(../img/svg/#{$NumberBgS}.svg) $x $y no-repeat
+
+=TextBlockCenter ($hig)
+  display: table-cell
+  vertical-align: middle
+  text-align: center
+  height: $hig
+
+=TextBlockMiddle ($higt)
+  display: table-cell
+  vertical-align: middle
+  height: $higt
+
+=AllBeforeBlock ($bleft, $btop, $bheight, $bwidth)
+  content: ""
+  position: absolute
+  left: $bleft
+  top: $btop
+  height: $bheight
+  width: $bwidth
+
+=BasecLink ($acolor, $bcolor)
+  a
+    color: $acolor
+    text-decoration: underline
+    &:hover
+      color: $bcolor
+      text-decoration: underline
